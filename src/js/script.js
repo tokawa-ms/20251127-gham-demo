@@ -39,7 +39,7 @@ const GAME_CONFIG = {
     // 弾設定
     BULLET_WIDTH: 4,
     BULLET_HEIGHT: 15,
-    PLAYER_BULLET_SPEED: 500, // ピクセル/秒
+    PLAYER_BULLET_SPEED: 1000, // ピクセル/秒（500から倍速に変更）
     ENEMY_BULLET_SPEED: 200, // ピクセル/秒
     
     // バリア設定
