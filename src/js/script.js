@@ -58,7 +58,7 @@ const GAME_CONFIG = {
     
     // ゲーム設定
     INITIAL_LIVES: 3,
-    MAX_SPEED_MULTIPLIER: 10, // インベーダー最大速度倍率（以前の5倍から10倍に変更し、最後の1匹時の速度を2倍に向上）
+    MAX_SPEED_MULTIPLIER: 7, // インベーダー最大速度倍率（レベル1での最高速度）
     LEVEL_SPEED_BONUS: 1, // レベルごとの最高速度ボーナス倍率
     ENEMY_SHOOT_DIVISOR: 5, // 敵発射数計算用の除数
     BARRIER_DAMAGE_PROBABILITY: 0.7, // バリアダメージ時のピクセル削除確率
