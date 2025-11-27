@@ -18,7 +18,7 @@
 const GAME_CONFIG = {
     // キャンバスサイズ（論理サイズ）
     CANVAS_WIDTH: 800,
-    CANVAS_HEIGHT: 600,
+    CANVAS_HEIGHT: 700,
     
     // インベーダー設定
     INVADER_ROWS: 5,
@@ -28,7 +28,7 @@ const GAME_CONFIG = {
     INVADER_PADDING: 10,
     INVADER_TOP_OFFSET: 60,
     INVADER_BASE_SPEED: 40, // ピクセル/秒
-    INVADER_DROP_DISTANCE: 20,
+    INVADER_DROP_DISTANCE: 15,
     
     // 自機設定
     PLAYER_WIDTH: 50,
@@ -882,7 +882,7 @@ class Game {
         // 自機
         this.player = new Player(
             GAME_CONFIG.CANVAS_WIDTH / 2 - GAME_CONFIG.PLAYER_WIDTH / 2,
-            GAME_CONFIG.CANVAS_HEIGHT - GAME_CONFIG.PLAYER_HEIGHT - 20
+            GAME_CONFIG.CANVAS_HEIGHT - GAME_CONFIG.PLAYER_HEIGHT - 50
         );
         
         // バリア
@@ -890,7 +890,7 @@ class Game {
         const barrierSpacing = GAME_CONFIG.CANVAS_WIDTH / (GAME_CONFIG.BARRIER_COUNT + 1);
         for (let i = 0; i < GAME_CONFIG.BARRIER_COUNT; i++) {
             const x = barrierSpacing * (i + 1) - GAME_CONFIG.BARRIER_WIDTH / 2;
-            const y = GAME_CONFIG.CANVAS_HEIGHT - 120;
+            const y = GAME_CONFIG.CANVAS_HEIGHT - 150;
             this.barriers.push(new Barrier(x, y));
         }
         
@@ -984,7 +984,7 @@ class Game {
         // 自機をリセット
         this.player = new Player(
             GAME_CONFIG.CANVAS_WIDTH / 2 - GAME_CONFIG.PLAYER_WIDTH / 2,
-            GAME_CONFIG.CANVAS_HEIGHT - GAME_CONFIG.PLAYER_HEIGHT - 20
+            GAME_CONFIG.CANVAS_HEIGHT - GAME_CONFIG.PLAYER_HEIGHT - 50
         );
         
         // 弾をクリア
