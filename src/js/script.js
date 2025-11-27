@@ -57,7 +57,7 @@ const GAME_CONFIG = {
     
     // ゲーム設定
     INITIAL_LIVES: 3,
-    MAX_SPEED_MULTIPLIER: 10, // インベーダー最大速度倍率
+    MAX_SPEED_MULTIPLIER: 5, // インベーダー最大速度倍率（10→5に緩和）
     ENEMY_SHOOT_DIVISOR: 5, // 敵発射数計算用の除数
     BARRIER_DAMAGE_PROBABILITY: 0.7, // バリアダメージ時のピクセル削除確率
     INVADER_MOVE_FACTOR: 0.5, // インベーダー移動量の調整係数
