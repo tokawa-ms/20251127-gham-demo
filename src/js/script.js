@@ -29,6 +29,7 @@ const GAME_CONFIG = {
     INVADER_TOP_OFFSET: 60,
     INVADER_BASE_SPEED: 40, // ピクセル/秒
     INVADER_DROP_DISTANCE: 15,
+    INVADER_HITBOX_MARGIN: 10, // 当たり判定の拡大マージン（ピクセル）
     
     // 自機設定
     PLAYER_WIDTH: 50,
@@ -1281,13 +1282,18 @@ class Game {
     checkCollisions() {
         // 自機弾とインベーダー
         if (this.playerBullet) {
+            // 当たり判定拡大マージン
+            const hitboxMargin = GAME_CONFIG.INVADER_HITBOX_MARGIN;
+            
             for (const inv of this.invaders) {
                 if (!inv.alive) continue;
                 
+                // インベーダーの当たり判定を拡大（マージン分だけ大きくする）
                 if (this.checkRectCollision(
                     this.playerBullet.x, this.playerBullet.y,
                     this.playerBullet.width, this.playerBullet.height,
-                    inv.x, inv.y, inv.width, inv.height
+                    inv.x - hitboxMargin, inv.y - hitboxMargin,
+                    inv.width + hitboxMargin * 2, inv.height + hitboxMargin * 2
                 )) {
                     inv.alive = false;
                     this.playerBullet = null;
