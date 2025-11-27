@@ -58,7 +58,8 @@ const GAME_CONFIG = {
     
     // ゲーム設定
     INITIAL_LIVES: 3,
-    MAX_SPEED_MULTIPLIER: 5, // インベーダー最大速度倍率（10→5に緩和）
+    MAX_SPEED_MULTIPLIER: 10, // インベーダー最大速度倍率（以前の5倍から10倍に変更し、最後の1匹時の速度を2倍に向上）
+    LEVEL_SPEED_BONUS: 1, // レベルごとの最高速度ボーナス倍率
     ENEMY_SHOOT_DIVISOR: 5, // 敵発射数計算用の除数
     BARRIER_DAMAGE_PROBABILITY: 0.7, // バリアダメージ時のピクセル削除確率
     INVADER_MOVE_FACTOR: 0.5, // インベーダー移動量の調整係数
@@ -919,16 +920,25 @@ class Game {
 
     /**
      * インベーダーの移動速度を計算
+     * 残りインベーダー数に応じて速度が上昇し、レベルに応じて最高速度が上がる
      */
     calculateInvaderSpeed() {
         const aliveCount = this.invaders.filter(inv => inv.alive).length;
         const totalCount = GAME_CONFIG.INVADER_ROWS * GAME_CONFIG.INVADER_COLS;
         
-        // 残りインベーダー数に応じて指数的に速度上昇
-        const speedMultiplier = 1 + (1 - aliveCount / totalCount) * (GAME_CONFIG.MAX_SPEED_MULTIPLIER - 1);
+        // レベルに応じた最高速度倍率の計算
+        // レベル1: MAX_SPEED_MULTIPLIER（10倍）
+        // レベル2以降: MAX_SPEED_MULTIPLIER + (level - 1) * LEVEL_SPEED_BONUS
+        const levelBonus = (this.level - 1) * GAME_CONFIG.LEVEL_SPEED_BONUS;
+        const maxSpeedMultiplier = GAME_CONFIG.MAX_SPEED_MULTIPLIER + levelBonus;
+        
+        // 残りインベーダー数に応じて線形的に速度上昇
+        // aliveCount = totalCount のとき: speedMultiplier = 1（基本速度）
+        // aliveCount = 1 のとき: speedMultiplier ≈ maxSpeedMultiplier（最高速度）
+        const speedMultiplier = 1 + (1 - aliveCount / totalCount) * (maxSpeedMultiplier - 1);
         this.invaderMoveInterval = 1000 / speedMultiplier;
         
-        console.log(`[Game] インベーダー速度更新: 残り=${aliveCount}, 間隔=${this.invaderMoveInterval.toFixed(0)}ms`);
+        console.log(`[Game] インベーダー速度更新: レベル=${this.level}, 残り=${aliveCount}, 最高速度倍率=${maxSpeedMultiplier.toFixed(1)}, 現在倍率=${speedMultiplier.toFixed(2)}, 間隔=${this.invaderMoveInterval.toFixed(0)}ms`);
     }
 
     /**
