@@ -738,12 +738,13 @@ class Game {
     }
 
     /**
-     * キャンバスをリサイズ（ビューポートの90%）
+     * キャンバスをリサイズ（ビューポートの約75%相当）
+     * 砲台やUI要素が画面内に収まるようにスケーリングを調整
      */
     resizeCanvas() {
         const container = document.getElementById('game-container');
-        const maxWidth = window.innerWidth * 0.9;
-        const maxHeight = window.innerHeight * 0.8;
+        const maxWidth = window.innerWidth * 0.7;
+        const maxHeight = window.innerHeight * 0.6;
         
         const aspectRatio = GAME_CONFIG.CANVAS_WIDTH / GAME_CONFIG.CANVAS_HEIGHT;
         
