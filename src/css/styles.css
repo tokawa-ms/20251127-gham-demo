@@ -1,0 +1,233 @@
+/* スペースインベーダー - レトロアーケードスタイル */
+
+/* フォント設定 */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    background-color: #000;
+    color: #00ff00;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* ゲームコンテナ */
+#game-container {
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+/* ゲームキャンバスラッパー */
+#game-wrapper {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 0, 0.3),
+        0 0 40px rgba(0, 255, 0, 0.2),
+        0 0 60px rgba(0, 255, 0, 0.1);
+}
+
+/* CRTスキャンライン効果 */
+#scanlines {
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+}
+
+/* CRTブラウン管効果 - 曲面とビネット */
+#game-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        transparent 60%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ゲームキャンバス */
+#game-canvas {
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* 被弾時のオーバーレイ */
+#hit-overlay {
+    z-index: 5;
+}
+
+#hit-overlay.active {
+    animation: hitFlash 0.5s ease-out;
+}
+
+@keyframes hitFlash {
+    0% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0; }
+}
+
+/* 残機表示 */
+.life {
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+/* ヘッダー情報 */
+#game-header {
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* ボタンスタイル */
+button {
+    font-family: 'Press Start 2P', monospace;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px currentColor;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* ポップアップスタイル */
+#game-over-popup,
+#hit-popup,
+#stage-clear-popup,
+#start-message {
+    z-index: 100;
+}
+
+#game-over-popup h2 {
+    text-shadow: 0 0 20px #ef4444;
+    animation: gameOverPulse 1s infinite;
+}
+
+@keyframes gameOverPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+#stage-clear-popup h2 {
+    text-shadow: 0 0 20px #22c55e;
+    animation: stageClearPulse 0.5s infinite;
+}
+
+@keyframes stageClearPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.02); }
+}
+
+/* スタートメッセージ */
+#start-message h1 {
+    text-shadow: 0 0 30px #00ff00;
+}
+
+/* レベル表示 */
+#level-display {
+    text-shadow: 0 0 10px #00ff00;
+}
+
+/* 操作説明 */
+#instructions {
+    opacity: 0.7;
+}
+
+/* アニメーション */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 640px) {
+    #game-header {
+        font-size: 0.7rem;
+    }
+
+    #score, #hi-score {
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+        font-size: 0.6rem;
+    }
+
+    #instructions {
+        font-size: 0.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    #game-header {
+        font-size: 1rem;
+    }
+
+    #score, #hi-score {
+        font-size: 2rem;
+    }
+}
+
+/* CRTフリッカー効果（軽微） */
+@keyframes flicker {
+    0% { opacity: 0.97; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.98; }
+    15% { opacity: 0.96; }
+    20% { opacity: 0.99; }
+    25% { opacity: 0.97; }
+    30% { opacity: 0.98; }
+    35% { opacity: 0.96; }
+    40% { opacity: 0.99; }
+    45% { opacity: 0.97; }
+    50% { opacity: 0.98; }
+    55% { opacity: 0.95; }
+    60% { opacity: 0.99; }
+    65% { opacity: 0.97; }
+    70% { opacity: 0.96; }
+    75% { opacity: 0.98; }
+    80% { opacity: 0.97; }
+    85% { opacity: 0.99; }
+    90% { opacity: 0.96; }
+    95% { opacity: 0.98; }
+    100% { opacity: 0.97; }
+}
+
+#game-wrapper {
+    animation: flicker 0.15s infinite;
+}
+
+/* インベーダー種類別の色（CSS参照用、実際はCanvasで描画） */
+.invader-type-1 { color: #ff0000; } /* 上段 - 高得点 */
+.invader-type-2 { color: #ff6600; }
+.invader-type-3 { color: #ffff00; }
+.invader-type-4 { color: #00ff00; }
+.invader-type-5 { color: #00ffff; } /* 下段 - 低得点 */
+.ufo { color: #ff00ff; } /* UFO */
