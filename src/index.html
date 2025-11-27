@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スペースインベーダー</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-black min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- ゲームコンテナ -->
+    <div id="game-container" class="relative flex flex-col items-center">
+        <!-- ヘッダー情報 -->
+        <div id="game-header" class="w-full flex justify-between items-center mb-2 px-4 text-green-400 font-mono">
+            <div class="flex flex-col">
+                <span class="text-xs">SCORE</span>
+                <span id="score" class="text-2xl">0</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <span class="text-xs">HI-SCORE</span>
+                <span id="hi-score" class="text-2xl">0</span>
+            </div>
+            <div class="flex flex-col items-end">
+                <span class="text-xs">LIVES</span>
+                <div id="lives" class="flex gap-1 text-xl">
+                    <span class="life">▲</span>
+                    <span class="life">▲</span>
+                    <span class="life">▲</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ゲームキャンバス -->
+        <div id="game-wrapper" class="relative">
+            <canvas id="game-canvas" class="border-2 border-green-500 bg-black"></canvas>
+            <!-- CRTスキャンライン効果 -->
+            <div id="scanlines" class="absolute inset-0 pointer-events-none"></div>
+            <!-- 被弾時の赤い演出 -->
+            <div id="hit-overlay" class="absolute inset-0 pointer-events-none bg-red-500 opacity-0 transition-opacity duration-100"></div>
+        </div>
+
+        <!-- レベル表示 -->
+        <div id="level-display" class="text-green-400 font-mono mt-2">
+            <span class="text-xs">LEVEL</span>
+            <span id="level" class="text-xl ml-2">1</span>
+        </div>
+
+        <!-- コントロールボタン -->
+        <div id="controls" class="flex gap-4 mt-4">
+            <button id="start-btn" class="px-6 py-2 bg-green-600 hover:bg-green-500 text-black font-bold rounded transition-colors">
+                START (S)
+            </button>
+            <button id="pause-btn" class="px-6 py-2 bg-yellow-600 hover:bg-yellow-500 text-black font-bold rounded transition-colors">
+                PAUSE (P)
+            </button>
+            <button id="reset-btn" class="px-6 py-2 bg-red-600 hover:bg-red-500 text-black font-bold rounded transition-colors">
+                RESET (R)
+            </button>
+        </div>
+
+        <!-- 操作説明 -->
+        <div id="instructions" class="text-green-400 font-mono text-xs mt-4 text-center">
+            <p>← → : 移動 | SPACE : 発射 | S : 開始 | P : 一時停止 | R : リセット</p>
+        </div>
+
+        <!-- ゲームオーバーポップアップ -->
+        <div id="game-over-popup" class="popup-overlay hidden">
+            <div class="popup-content border-red-500">
+                <h2 class="text-4xl font-bold text-red-500 mb-4 font-mono">GAME OVER</h2>
+                <p class="text-green-400 font-mono text-xl mb-2">SCORE: <span id="final-score">0</span></p>
+                <p class="text-yellow-400 font-mono text-lg mb-4">HI-SCORE: <span id="final-hi-score">0</span></p>
+                <div class="popup-buttons">
+                    <button id="restart-btn" class="btn btn-green">
+                        RESTART
+                    </button>
+                    <button id="popup-reset-btn" class="btn btn-red">
+                        RESET
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 被弾時の再スタートポップアップ -->
+        <div id="hit-popup" class="popup-overlay hidden">
+            <div class="popup-content border-yellow-500">
+                <h2 class="text-2xl font-bold text-yellow-500 mb-4 font-mono">HIT!</h2>
+                <p class="text-green-400 font-mono mb-4">残機: <span id="remaining-lives">2</span></p>
+                <button id="continue-btn" class="btn btn-green">
+                    CONTINUE
+                </button>
+            </div>
+        </div>
+
+        <!-- ステージクリアポップアップ -->
+        <div id="stage-clear-popup" class="popup-overlay hidden">
+            <div class="popup-content border-green-500">
+                <h2 class="text-3xl font-bold text-green-500 mb-4 font-mono">STAGE CLEAR!</h2>
+                <p class="text-yellow-400 font-mono mb-4">LEVEL <span id="next-level">2</span> へ</p>
+                <button id="next-stage-btn" class="btn btn-green">
+                    NEXT STAGE
+                </button>
+            </div>
+        </div>
+
+        <!-- スタート待ちメッセージ -->
+        <div id="start-message" class="popup-overlay">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-green-400 mb-4 font-mono animate-pulse">SPACE INVADERS</h1>
+                <p class="text-green-400 font-mono text-xl">Press S or START to begin</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
