@@ -64,16 +64,16 @@
         </div>
 
         <!-- ゲームオーバーポップアップ -->
-        <div id="game-over-popup" class="hidden absolute inset-0 flex items-center justify-center bg-black bg-opacity-80">
-            <div class="bg-gray-900 border-4 border-red-500 p-8 rounded-lg text-center">
+        <div id="game-over-popup" class="popup-overlay hidden">
+            <div class="popup-content border-red-500">
                 <h2 class="text-4xl font-bold text-red-500 mb-4 font-mono">GAME OVER</h2>
                 <p class="text-green-400 font-mono text-xl mb-2">SCORE: <span id="final-score">0</span></p>
                 <p class="text-yellow-400 font-mono text-lg mb-4">HI-SCORE: <span id="final-hi-score">0</span></p>
-                <div class="flex gap-4 justify-center">
-                    <button id="restart-btn" class="px-6 py-2 bg-green-600 hover:bg-green-500 text-black font-bold rounded transition-colors">
+                <div class="popup-buttons">
+                    <button id="restart-btn" class="btn btn-green">
                         RESTART
                     </button>
-                    <button id="popup-reset-btn" class="px-6 py-2 bg-red-600 hover:bg-red-500 text-black font-bold rounded transition-colors">
+                    <button id="popup-reset-btn" class="btn btn-red">
                         RESET
                     </button>
                 </div>
@@ -81,29 +81,29 @@
         </div>
 
         <!-- 被弾時の再スタートポップアップ -->
-        <div id="hit-popup" class="hidden absolute inset-0 flex items-center justify-center bg-black bg-opacity-60">
-            <div class="bg-gray-900 border-4 border-yellow-500 p-6 rounded-lg text-center">
+        <div id="hit-popup" class="popup-overlay hidden">
+            <div class="popup-content border-yellow-500">
                 <h2 class="text-2xl font-bold text-yellow-500 mb-4 font-mono">HIT!</h2>
                 <p class="text-green-400 font-mono mb-4">残機: <span id="remaining-lives">2</span></p>
-                <button id="continue-btn" class="px-6 py-2 bg-green-600 hover:bg-green-500 text-black font-bold rounded transition-colors">
+                <button id="continue-btn" class="btn btn-green">
                     CONTINUE
                 </button>
             </div>
         </div>
 
         <!-- ステージクリアポップアップ -->
-        <div id="stage-clear-popup" class="hidden absolute inset-0 flex items-center justify-center bg-black bg-opacity-60">
-            <div class="bg-gray-900 border-4 border-green-500 p-6 rounded-lg text-center">
+        <div id="stage-clear-popup" class="popup-overlay hidden">
+            <div class="popup-content border-green-500">
                 <h2 class="text-3xl font-bold text-green-500 mb-4 font-mono">STAGE CLEAR!</h2>
                 <p class="text-yellow-400 font-mono mb-4">LEVEL <span id="next-level">2</span> へ</p>
-                <button id="next-stage-btn" class="px-6 py-2 bg-green-600 hover:bg-green-500 text-black font-bold rounded transition-colors">
+                <button id="next-stage-btn" class="btn btn-green">
                     NEXT STAGE
                 </button>
             </div>
         </div>
 
         <!-- スタート待ちメッセージ -->
-        <div id="start-message" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
+        <div id="start-message" class="popup-overlay">
             <div class="text-center">
                 <h1 class="text-4xl font-bold text-green-400 mb-4 font-mono animate-pulse">SPACE INVADERS</h1>
                 <p class="text-green-400 font-mono text-xl">Press S or START to begin</p>
