@@ -689,7 +689,9 @@ class Game {
         // インベーダー移動制御
         this.invaderDirection = 1; // 1: 右, -1: 左
         this.invaderMoveTimer = 0;
-        this.invaderMoveInterval = 1000; // ミリ秒
+        this.invaderMoveInterval = 1000; // ミリ秒（サウンド再生間隔の基準）
+        this.invaderSubTick = 0; // サブティック（4回の移動で1音）
+        this.INVADER_SUB_TICKS = 4; // 1音あたりの移動回数
         
         // UFOタイマー
         this.ufoTimer = 0;
@@ -909,6 +911,7 @@ class Game {
         // 移動制御リセット
         this.invaderDirection = 1;
         this.invaderMoveTimer = 0;
+        this.invaderSubTick = 0;
         this.calculateInvaderSpeed();
         
         console.log(`[Game] 初期化完了: インベーダー=${this.invaders.length}, バリア=${this.barriers.length}`);
@@ -1159,9 +1162,11 @@ class Game {
             this.player.moveRight(deltaTime, GAME_CONFIG.CANVAS_WIDTH);
         }
         
-        // インベーダー移動
+        // インベーダー移動（サブティックシステム: 4回移動で1音）
         this.invaderMoveTimer += deltaTime * 1000;
-        if (this.invaderMoveTimer >= this.invaderMoveInterval) {
+        // 移動間隔を1/4にして細かく移動
+        const subTickInterval = this.invaderMoveInterval / this.INVADER_SUB_TICKS;
+        if (this.invaderMoveTimer >= subTickInterval) {
             this.moveInvaders();
             this.invaderMoveTimer = 0;
         }
@@ -1204,10 +1209,25 @@ class Game {
 
     /**
      * インベーダーを移動
+     * サブティックシステム: 4回の移動で1音を鳴らし、各移動は1/4の距離
      */
     moveInvaders() {
         const aliveInvaders = this.invaders.filter(inv => inv.alive);
         if (aliveInvaders.length === 0) return;
+        
+        // サブティックをインクリメント
+        this.invaderSubTick++;
+        
+        // 4回目のサブティックで音を鳴らしてアニメーションを切り替え
+        const shouldPlaySound = this.invaderSubTick >= this.INVADER_SUB_TICKS;
+        if (shouldPlaySound) {
+            this.invaderSubTick = 0;
+            this.sound.playInvaderMove();
+            // 4回に1回アニメーションを切り替え（元のタイミングを維持）
+            for (const inv of aliveInvaders) {
+                inv.toggleAnimation();
+            }
+        }
         
         // 端に到達したかチェック
         let hitEdge = false;
@@ -1223,10 +1243,9 @@ class Game {
         }
         
         if (hitEdge) {
-            // 一段下がって方向転換
+            // 一段下がって方向転換（サブティック分割により1/4の距離で4回移動 = 元の落下距離を維持）
             for (const inv of aliveInvaders) {
-                inv.y += GAME_CONFIG.INVADER_DROP_DISTANCE;
-                inv.toggleAnimation();
+                inv.y += GAME_CONFIG.INVADER_DROP_DISTANCE / this.INVADER_SUB_TICKS;
             }
             this.invaderDirection *= -1;
             
@@ -1238,15 +1257,13 @@ class Game {
                 }
             }
         } else {
-            // 横移動
-            const moveAmount = GAME_CONFIG.INVADER_BASE_SPEED * (1000 / this.invaderMoveInterval) * 0.5;
+            // 横移動（移動量を1/4にしてスムーズな動きに）
+            const baseMove = GAME_CONFIG.INVADER_BASE_SPEED * (1000 / this.invaderMoveInterval) * 0.5;
+            const moveAmount = baseMove / this.INVADER_SUB_TICKS;
             for (const inv of aliveInvaders) {
                 inv.x += moveAmount * this.invaderDirection;
-                inv.toggleAnimation();
             }
         }
-        
-        this.sound.playInvaderMove();
     }
 
     /**
