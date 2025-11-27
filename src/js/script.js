@@ -56,6 +56,10 @@ const GAME_CONFIG = {
     
     // ゲーム設定
     INITIAL_LIVES: 3,
+    MAX_SPEED_MULTIPLIER: 10, // インベーダー最大速度倍率
+    ENEMY_SHOOT_DIVISOR: 5, // 敵発射数計算用の除数
+    BARRIER_DAMAGE_PROBABILITY: 0.7, // バリアダメージ時のピクセル削除確率
+    INVADER_MOVE_FACTOR: 0.5, // インベーダー移動量の調整係数
     
     // インベーダースコア（行ごと、上から順）
     INVADER_SCORES: [50, 40, 30, 20, 10],
@@ -915,7 +919,7 @@ class Game {
         const totalCount = GAME_CONFIG.INVADER_ROWS * GAME_CONFIG.INVADER_COLS;
         
         // 残りインベーダー数に応じて指数的に速度上昇
-        const speedMultiplier = 1 + (1 - aliveCount / totalCount) * 9;
+        const speedMultiplier = 1 + (1 - aliveCount / totalCount) * (GAME_CONFIG.MAX_SPEED_MULTIPLIER - 1);
         this.invaderMoveInterval = 1000 / speedMultiplier;
         
         console.log(`[Game] インベーダー速度更新: 残り=${aliveCount}, 間隔=${this.invaderMoveInterval.toFixed(0)}ms`);
@@ -1037,7 +1041,7 @@ class Game {
         if (aliveInvaders.length === 0) return;
         
         // レベルに応じて発射する敵の数を決定
-        const shootCount = Math.min(this.level, Math.ceil(aliveInvaders.length / 5));
+        const shootCount = Math.min(this.level, Math.ceil(aliveInvaders.length / GAME_CONFIG.ENEMY_SHOOT_DIVISOR));
         
         for (let i = 0; i < shootCount; i++) {
             const shooter = aliveInvaders[Math.floor(Math.random() * aliveInvaders.length)];

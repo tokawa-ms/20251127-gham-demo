@@ -112,6 +112,132 @@ button:active {
     transform: scale(0.95);
 }
 
+/* ポップアップオーバーレイ共通スタイル */
+.popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 100;
+}
+
+.popup-overlay.hidden {
+    display: none !important;
+}
+
+.popup-content {
+    background-color: #1a1a2e;
+    border-width: 4px;
+    border-style: solid;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* ボタンスタイル */
+.btn {
+    padding: 0.5rem 1.5rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.btn-green {
+    background-color: #16a34a;
+    color: #000;
+}
+
+.btn-green:hover {
+    background-color: #22c55e;
+}
+
+.btn-red {
+    background-color: #dc2626;
+    color: #000;
+}
+
+.btn-red:hover {
+    background-color: #ef4444;
+}
+
+/* ボーダーカラー */
+.border-red-500 {
+    border-color: #ef4444;
+}
+
+.border-yellow-500 {
+    border-color: #eab308;
+}
+
+.border-green-500 {
+    border-color: #22c55e;
+}
+
+/* テキストカラー */
+.text-red-500 {
+    color: #ef4444;
+}
+
+.text-yellow-500 {
+    color: #eab308;
+}
+
+.text-green-500 {
+    color: #22c55e;
+}
+
+.text-green-400 {
+    color: #4ade80;
+}
+
+.text-yellow-400 {
+    color: #facc15;
+}
+
+/* テキストサイズ */
+.text-4xl {
+    font-size: 2.25rem;
+}
+
+.text-3xl {
+    font-size: 1.875rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+.text-xl {
+    font-size: 1.25rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+/* マージン */
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
 /* ポップアップスタイル */
 #game-over-popup,
 #hit-popup,
