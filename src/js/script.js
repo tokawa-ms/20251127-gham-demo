@@ -34,6 +34,7 @@ const GAME_CONFIG = {
     PLAYER_WIDTH: 50,
     PLAYER_HEIGHT: 30,
     PLAYER_SPEED: 300, // ピクセル/秒
+    PLAYER_BOTTOM_MARGIN: 80, // 自機の画面下部からのマージン
     
     // 弾設定
     BULLET_WIDTH: 4,
@@ -882,7 +883,7 @@ class Game {
         // 自機
         this.player = new Player(
             GAME_CONFIG.CANVAS_WIDTH / 2 - GAME_CONFIG.PLAYER_WIDTH / 2,
-            GAME_CONFIG.CANVAS_HEIGHT - GAME_CONFIG.PLAYER_HEIGHT - 50
+            GAME_CONFIG.CANVAS_HEIGHT - GAME_CONFIG.PLAYER_HEIGHT - GAME_CONFIG.PLAYER_BOTTOM_MARGIN
         );
         
         // バリア
@@ -984,7 +985,7 @@ class Game {
         // 自機をリセット
         this.player = new Player(
             GAME_CONFIG.CANVAS_WIDTH / 2 - GAME_CONFIG.PLAYER_WIDTH / 2,
-            GAME_CONFIG.CANVAS_HEIGHT - GAME_CONFIG.PLAYER_HEIGHT - 50
+            GAME_CONFIG.CANVAS_HEIGHT - GAME_CONFIG.PLAYER_HEIGHT - GAME_CONFIG.PLAYER_BOTTOM_MARGIN
         );
         
         // 弾をクリア
